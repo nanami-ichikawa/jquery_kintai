@@ -1,0 +1,282 @@
+<html lang = "ja">
+    <meta charset="utf-8">
+    <head>
+        <!-- ①：BootStrapで使うCSSを読み込む -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <!-- ②：BootStrapとjQueryを読み込む -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <title>勤怠入力画面</title>
+
+        <!-- アラート:「年月未指定」アラート -->
+        <script>
+        $(function(){
+            $('#submit').on('click',function(){
+                if($('#month-input').val() ===''){
+                }
+            })
+        });
+        </script>
+
+    </head>
+    <body>
+    <!-- メニューバー -->
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark mt-3 mb-3">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4" aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">勤怠管理システム</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">勤怠入力</a>
+                    </li>
+                    <li class="nav-item active dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            マスタ管理</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">社員マスタ管理</a>
+                            <a class="dropdown-item" href="#">祝日マスタ管理</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ログアウト</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>    
+        <!-- 勤怠入力 -->
+        <h4 class="title ml-5">勤怠入力</h4>
+        <div class="container">
+            <div class="card mx-auto">
+                <div class="card-header">
+                入力
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="month-input" class="col-form-label">年月:</label>
+                                <input type="month" class="form-control col-5">
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <!-- アラート:「年月未指定」-->
+                            <button id="submit" class="btn btn-info btn-sm mt-3" onclick="$('#alert').show()">表示</button>
+                        </div>
+                        <div>
+                            <div id="alert" class="alert alert-danger" style="display:none;">
+                                <a href="#" class="close" data-dismiss="alert"aria-label="close">×</a>
+                                年月が選択されていません。
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><br>
+        <!-- カレンダー -->
+        <div class="container">
+            <div class="card mx-auto">
+                <div class="card-header">
+                カレンダー
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary btn-sm mt-3">保存</button>
+                                <button type="submit" class="btn btn-success btn-sm mt-3" data-toggle="modal" data-target="#apply">申請</button>
+                            </div>
+                        </div>
+                        <!-- 申請モーダル -->
+                        <div class="modal fade" id="apply" tabindex="-1" role="dialog" aria-labelledby="apply" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header text-white bg-info">
+                                        <h5 class="modal-title" id="applyTitle">勤怠申請</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    入力した勤怠を申請しますか？
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                                        <button type="button" class="btn btn-success">申請</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- カレンダー表示 -->
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col-1">日</th>
+                                    <th scope="col-1">曜日</th>
+                                    <th scope="col-1">区分</th>
+                                    <th scope="col-1">開始時刻</th>
+                                    <th scope="col-1">終了時刻</th>
+                                    <th scope="col-1">夜休憩時間</th>
+                                    <th scope="col-1">昼休憩時間</th>
+                                    <th scope="col-6">備考</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>木</td>
+                                    <td>
+                                        <select class="form-control" id="select">
+                                            <option value>出勤</option>
+                                            <option value>休日</option>
+                                            <option value>有給</option>
+                                            <option value>休出</option>
+                                            <option value>欠勤</option>
+                                            <option value>特休</option>
+                                            <option value>代休</option>
+                                            <option value>振休</option>
+                                        </select>
+                                    </td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>金</td>
+                                    <td>
+                                        <select class="form-control" id="select">
+                                            <option value>出勤</option>
+                                            <option value>休日</option>
+                                            <option value>有給</option>
+                                            <option value>休出</option>
+                                            <option value>欠勤</option>
+                                            <option value>特休</option>
+                                            <option value>代休</option>
+                                            <option value>振休</option>
+                                        </select>
+                                    </td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="text"></td>
+                                </tr>
+                                <tr class="table-primary text-primary">
+                                    <th scope="row">3</th>
+                                    <td>土</td>
+                                    <td>
+                                        <select class="form-control" id="select">
+                                            <option value>出勤</option>
+                                            <!-- 休日を初期値に指定 -->
+                                            <option value selected="休日">休日</option>
+                                            <option value>有給</option>
+                                            <option value>休出</option>
+                                            <option value>欠勤</option>
+                                            <option value>特休</option>
+                                            <option value>代休</option>
+                                            <option value>振休</option>
+                                        </select>
+                                    </td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="text"></td>
+                                </tr>
+                                <tr class="table-danger text-danger">
+                                    <th scope="row">4</th>
+                                    <td>日</td>
+                                    <td>
+                                        <select class="form-control" id="select">
+                                            <option value>出勤</option>
+                                            <option value selected="休日">休日</option>
+                                            <option value>有給</option>
+                                            <option value>休出</option>
+                                            <option value>欠勤</option>
+                                            <option value>特休</option>
+                                            <option value>代休</option>
+                                            <option value>振休</option>
+                                        </select>
+                                    </td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>月</td>
+                                    <td>
+                                        <select class="form-control" id="select">
+                                            <option value>出勤</option>
+                                            <option value>休日</option>
+                                            <option value>有給</option>
+                                            <option value>休出</option>
+                                            <option value>欠勤</option>
+                                            <option value>特休</option>
+                                            <option value>代休</option>
+                                            <option value>振休</option>
+                                        </select>
+                                    </td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>火</td>
+                                    <td>
+                                        <select class="form-control" id="select">
+                                            <option value>出勤</option>
+                                            <option value>休日</option>
+                                            <option value>有給</option>
+                                            <option value>休出</option>
+                                            <option value>欠勤</option>
+                                            <option value>特休</option>
+                                            <option value>代休</option>
+                                            <option value>振休</option>
+                                        </select>
+                                    </td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>水</td>
+                                    <td>
+                                        <select class="form-control" id="select">
+                                            <option value>出勤</option>
+                                            <option value>休日</option>
+                                            <option value>有給</option>
+                                            <option value>休出</option>
+                                            <option value>欠勤</option>
+                                            <option value>特休</option>
+                                            <option value>代休</option>
+                                            <option value>振休</option>
+                                        </select>
+                                    </td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="time"></td>
+                                    <td><input class="form-control" type="text"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
